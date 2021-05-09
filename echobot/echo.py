@@ -43,9 +43,25 @@ def help_command(update: Update, _: CallbackContext) -> None:
     update.message.reply_text('Necesitas ayuda gato? jajaja anda a casa pete!')
 
 
+def corre(update: Update, _: CallbackContext) -> None:
+    update.message.reply_text('Estoy corriendo! Acelerale Francisca')
+
+
 def echo(update: Update, _: CallbackContext) -> None:
     """Echo the user message."""
     update.message.reply_text(update.message.text)
+
+
+def some_snd_image(update: Update, _: CallbackContext) -> None:
+    update.message.reply_text('Me enviaste una imagen!')
+
+
+def some_snd_audio(update: Update, _: CallbackContext) -> None:
+    update.message.reply_text('Ah siii? Interesante :v')
+
+
+def echo_audio(update: Update, _: CallbackContext) -> None:
+    update.message.reply_audio(update.message.audio)
 
 
 def main() -> None:
@@ -59,9 +75,12 @@ def main() -> None:
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
+    dispatcher.add_handler(CommandHandler("corre", corre))
 
     # on non command i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+    dispatcher.add_handler(MessageHandler(Filters.photo & ~Filters.command, some_snd_image))
+    dispatcher.add_handler(MessageHandler(Filters.voice & ~Filters.command, echo_audio))
 
     # Start the Bot
     updater.start_polling()
